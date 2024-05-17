@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "960131683464",
+    "project_id": "nextwaveconnect-dbc90",
+    "storage_bucket": "nextwaveconnect-dbc90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960131683464:android:9f727d9be9118380787b3d",
+        "android_client_info": {
+          "package_name": "com.example.nextwaveconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8wezwdx8bAzfGAj9UAMmQVpddhFSo-Qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
