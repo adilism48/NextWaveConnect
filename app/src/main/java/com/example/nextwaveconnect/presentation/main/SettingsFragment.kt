@@ -13,6 +13,7 @@ import com.example.nextwaveconnect.presentation.auth.AuthActivity
 import com.example.nextwaveconnect.presentation.auth.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class SettingsFragment : Fragment() {
@@ -54,6 +55,15 @@ class SettingsFragment : Fragment() {
                 }
             }
             logout()
+        }
+        val myRef = Firebase.database.getReference("users")
+
+        myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
+            binding.sEmailVisible.isChecked = it.child("showEmail").value as Boolean
+        }
+
+        binding.sEmailVisible.setOnCheckedChangeListener { _, isChecked ->
+            myRef.child(auth.currentUser?.uid ?: "No UID").updateChildren(hashMapOf<String, Any?>("showEmail" to isChecked))
         }
 
         return binding.root

@@ -40,10 +40,10 @@ class PostsFragment : Fragment() {
         }
 
         binding.bSend.setOnClickListener {
-            val email = auth.currentUser?.email
+            val userUID = auth.currentUser?.uid
             val text = binding.etNewPost.text.toString()
 
-            viewModel.addPost(Post(email, text))
+            viewModel.addPost(Post(userUID, text))
         }
 
         viewModel.getPost(postsListener)

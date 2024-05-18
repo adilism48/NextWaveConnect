@@ -36,15 +36,15 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="4dp"
+                android:textSize="12sp"
                 tools:text="Lolkek" />
 
             <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 android:paddingBottom="4dp"
+                android:textSize="12sp"
                 tools:text="lorem@email.com" />
 
         </LinearLayout>
