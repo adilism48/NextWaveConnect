@@ -7,5 +7,6 @@ Mobile application with the ability to register new users, log in to your accoun
 https://youtu.be/0qMdyiOFDJE
 
 ## Plugins
+- Firebase Database
+- Firebase Authentication
 - Jetpack Lifecycle
-- Firebase
