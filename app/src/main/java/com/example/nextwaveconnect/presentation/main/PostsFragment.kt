@@ -65,7 +65,7 @@ class PostsFragment : Fragment() {
         val myRef = Firebase.database.getReference("users")
 
         myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
-            val currentTag = it.child("tag").value.toString()
+            val currentTag = it.child("interest").value.toString()
 
             binding.sRec.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {

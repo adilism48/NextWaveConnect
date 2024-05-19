@@ -61,7 +61,7 @@ class SettingsFragment : Fragment() {
 
         myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
             binding.sEmailVisible.isChecked = it.child("showEmail").value as Boolean
-            binding.tvInterest.text = it.child("tag").value.toString()
+            binding.tvInterest.text = it.child("interest").value.toString()
         }
 
         binding.sEmailVisible.setOnCheckedChangeListener { _, isChecked ->
@@ -87,9 +87,9 @@ class SettingsFragment : Fragment() {
                     else -> "other"
                 })
                 myRef.child(auth.currentUser?.uid ?: "No UID")
-                    .updateChildren(hashMapOf<String, Any?>("tag" to tag))
+                    .updateChildren(hashMapOf<String, Any?>("interest" to tag))
                 myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
-                    binding.tvInterest.text = it.child("tag").value.toString()
+                    binding.tvInterest.text = it.child("interest").value.toString()
                 }
                 Toast.makeText(
                     context,
