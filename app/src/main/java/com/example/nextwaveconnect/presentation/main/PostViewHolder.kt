@@ -21,6 +21,7 @@ class PostViewHolder(private val binding: PostListItemBinding) :
         }
 
         tvPost.text = post.text
+        tvTag.text = post.tag
     }
 
     companion object {

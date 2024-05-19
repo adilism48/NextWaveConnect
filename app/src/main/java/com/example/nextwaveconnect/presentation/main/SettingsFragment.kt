@@ -61,13 +61,43 @@ class SettingsFragment : Fragment() {
 
         myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
             binding.sEmailVisible.isChecked = it.child("showEmail").value as Boolean
+            binding.tvInterest.text = it.child("tag").value.toString()
         }
 
         binding.sEmailVisible.setOnCheckedChangeListener { _, isChecked ->
-            myRef.child(auth.currentUser?.uid ?: "No UID").updateChildren(hashMapOf<String, Any?>("showEmail" to isChecked))
+            myRef.child(auth.currentUser?.uid ?: "No UID")
+                .updateChildren(hashMapOf<String, Any?>("showEmail" to isChecked))
         }
 
         binding.tvEmail.text = auth.currentUser?.email ?: "Not auth"
+
+        binding.bSaveInterests.setOnClickListener {
+            val tags = binding.groupTag.checkedRadioButtonId
+
+            if (tags == -1) {
+                Toast.makeText(
+                    context,
+                    "You need to choose tag",
+                    Toast.LENGTH_LONG,
+                ).show()
+            } else {
+                val tag = (when (tags) {
+                    binding.rbIT.id -> "it"
+                    binding.rbMemes.id -> "memes"
+                    else -> "other"
+                })
+                myRef.child(auth.currentUser?.uid ?: "No UID")
+                    .updateChildren(hashMapOf<String, Any?>("tag" to tag))
+                myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
+                    binding.tvInterest.text = it.child("tag").value.toString()
+                }
+                Toast.makeText(
+                    context,
+                    "Interests changed",
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
+        }
 
         return binding.root
     }
@@ -79,6 +109,11 @@ class SettingsFragment : Fragment() {
 
     private fun logout() {
         auth.signOut()
-        startActivity(Intent(context, AuthActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
+        startActivity(
+            Intent(
+                context,
+                AuthActivity::class.java
+            ).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+        )
     }
 }

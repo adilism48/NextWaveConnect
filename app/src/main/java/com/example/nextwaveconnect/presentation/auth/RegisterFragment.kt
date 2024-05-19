@@ -42,7 +42,7 @@ class RegisterFragment : Fragment() {
             } else {
                 viewModel.signUp(email, password).observe(viewLifecycleOwner) {
                     if (it.isSuccess) {
-                        myRef.child(auth.currentUser?.uid ?: "noUID").setValue(User(name, auth.currentUser?.email, true))
+                        myRef.child(auth.currentUser?.uid ?: "noUID").setValue(User(name, auth.currentUser?.email, true, "other"))
                         Toast.makeText(
                             context,
                             "Account created",

@@ -16,4 +16,8 @@ object PostRepositoryImpl : PostRepository {
     override fun getPosts(listener: ValueEventListener) {
         myRef.addValueEventListener(listener)
     }
+
+    override fun getRecommendedPosts(listener: ValueEventListener, currentTag: String) {
+        myRef.orderByChild("tag").equalTo(currentTag).addValueEventListener(listener)
+    }
 }

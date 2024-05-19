@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class PostsFragment : Fragment() {
@@ -42,11 +44,44 @@ class PostsFragment : Fragment() {
         binding.bSend.setOnClickListener {
             val userUID = auth.currentUser?.uid
             val text = binding.etNewPost.text.toString()
+            val tags = binding.groupTag.checkedRadioButtonId
 
-            viewModel.addPost(Post(userUID, text))
+            if (tags == -1) {
+                Toast.makeText(
+                    context,
+                    "You need to choose tag",
+                    Toast.LENGTH_LONG,
+                ).show()
+            } else {
+                val tag = (when (tags) {
+                    binding.rbIT.id -> "it"
+                    binding.rbMemes.id -> "memes"
+                    else -> "other"
+                })
+                viewModel.addPost(Post(userUID, text, tag))
+            }
         }
 
-        viewModel.getPost(postsListener)
+        val myRef = Firebase.database.getReference("users")
+
+        myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
+            val currentTag = it.child("tag").value.toString()
+
+            binding.sRec.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.getRecommendedPosts(postsListener, currentTag)
+                } else {
+                    viewModel.getPost(postsListener)
+                }
+            }
+
+            if (binding.sRec.isChecked) {
+                viewModel.getRecommendedPosts(postsListener, currentTag)
+            } else {
+                viewModel.getPost(postsListener)
+            }
+        }
+
         initRcView()
         return binding.root
     }
@@ -64,6 +99,7 @@ class PostsFragment : Fragment() {
                 val post = dataSnapshot.getValue(Post::class.java)
                 post?.let { posts.add(it) }
             }
+
             adapter.submitList(posts)
         }
 

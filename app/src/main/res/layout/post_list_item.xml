@@ -47,6 +47,16 @@
                 android:textSize="12sp"
                 tools:text="lorem@email.com" />
 
+            <TextView
+                android:id="@+id/tvTag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="tag"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
     </LinearLayout>
