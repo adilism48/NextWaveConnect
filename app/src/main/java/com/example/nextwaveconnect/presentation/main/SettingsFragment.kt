@@ -56,6 +56,7 @@ class SettingsFragment : Fragment() {
             }
             logout()
         }
+
         val myRef = Firebase.database.getReference("users")
 
         myRef.child(auth.currentUser?.uid ?: "No UID").get().addOnSuccessListener {
@@ -65,6 +66,8 @@ class SettingsFragment : Fragment() {
         binding.sEmailVisible.setOnCheckedChangeListener { _, isChecked ->
             myRef.child(auth.currentUser?.uid ?: "No UID").updateChildren(hashMapOf<String, Any?>("showEmail" to isChecked))
         }
+
+        binding.tvEmail.text = auth.currentUser?.email ?: "Not auth"
 
         return binding.root
     }

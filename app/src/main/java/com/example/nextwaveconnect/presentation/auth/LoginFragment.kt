@@ -62,6 +62,13 @@ class LoginFragment : Fragment() {
                 .commit()
         }
 
+        binding.tvForgetPass.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.auth_container, ResetPassFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
         checkAuthState()
         return binding.root
     }
